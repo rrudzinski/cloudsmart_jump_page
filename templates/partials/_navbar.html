@@ -1,0 +1,83 @@
+{% load static %}
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+    <div class="container">
+        <a class="navbar-brand" href="{% url 'index' %}">
+            <img class="logo" src="{% static 'img/logo.png' %}" alt="logo">
+        </a>   
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav">
+                    {% if '/' == request.path %}
+                        <li class="nav-item active mr-3"></li>
+                    {% else %}
+                        <li class="nav-item mr-3"></li>
+                    {% endif %}
+                        <a href="{% url 'index' %}" class="nav-link">Home</a>
+                    {% if 'about' == request.path %}
+                        <li class="nav-item active mr-3"></li>
+                    {% else %}
+                        <li class="nav-item mr-3"></li>
+                    {% endif %}
+                    {% if user.is_superuser %}
+                        <a href="{% url 'admin:index' %}" class="nav-link mr-4" target="_blank">Admin</a>
+                    {% endif %}
+                    {% if user.is_authenticated %}    
+                        <form class="form-inline my-2 my-lg-0" id="search-form" action="{% url 'search' %}">
+                            <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" name="keywords">
+                            <button class="btn btn-outline-warning my-2 my-sm-0" type="submit">Search</button>
+                        </form>
+                    {% endif %}
+                </ul>
+                <ul class="navbar-nav ml-auto">
+                    {% if user.is_authenticated %}
+                        <li 
+                        {% if 'index' in request.path %}
+                            class="nav-item mr-3 active"
+                        {% else %}
+                            class="nav-item mr-3"
+                        {% endif %}
+                        >
+                            <a href="#" class="nav-link">
+                                Welcome {{ user.first_name }} {{ user.last_name }}
+                            </a>
+                        </li>
+                        <li class="nav-item mr-3">
+                            <a href="javascript:{document.getElementById('logout').submit()}" class="nav-link">
+                                <i class="fas fa-sign-out-alt"></i> Logout
+                            </a>
+                            <form action="{% url 'logout' %}" method="POST" id="logout">
+                                {% csrf_token %}
+                                <input type="hidden">
+                            </form>
+                        </li>
+                    {% else %}
+                        <li 
+                        {% if 'register' in request.path %}
+                            class="nav-item mr-3 active"
+                        {% else %}
+                            class="nav-item mr-3"
+                        {% endif %}
+                        >
+                            <a href="{% url 'register' %}" class="nav-link">
+                                <i class="fas fa-user-plus"></i> Register
+                            </a>
+                        </li>
+                        <li 
+                        {% if 'login' in request.path %}
+                            class="nav-item mr-3 active"
+                        {% else %}
+                            class="nav-item mr-3"
+                        {% endif %}
+                        >
+                            <a href="{% url 'login' %}" class="nav-link">
+                                <i class="fas fa-sign-in-alt"></i> Login
+                            </a>
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+    </div>
+</nav>

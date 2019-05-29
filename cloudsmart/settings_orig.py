@@ -23,8 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'fv3+-^+b+jy$54#2p%z8+(w@84w*mcv%i@qb#eo6z%*3g65$^t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False ## Orig
-# DEBUG = True ## For TESTING only - BWC
+DEBUG = False
 
 ALLOWED_HOSTS = ['apps.cloudsmartgis.com', 'localhost']
 

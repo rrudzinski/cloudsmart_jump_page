@@ -1,0 +1,29 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section id="login-section">
+    <form class="form-signin" action="{% url 'login' %}" method="POST">
+        {% csrf_token %} 
+        <!-- Alerts -->
+        {% include 'partials/_alerts.html' %}
+        <div class="d-flex justify-content-center mr-2">
+            <h1 class="h3 mb-3 font-weight-normal"><i class="fa fa-sign-in-alt" id="sign-in-icon" aria-hidden="true"></i>Please sign in</h1>
+        </div>   
+        <label for="username" class="sr-only">Username</label>
+        <input type="text" id="inputEmail" name="username" class="form-control" placeholder="Username" required autofocus>
+        <label for="password" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" name="password" class="form-control" placeholder="Password" required>
+        <div class="form-group mt-3">
+            <small class="text-muted">
+                <a href="{% url 'password_reset' %}">Forgot Password?</a>
+            </small>
+        </div>
+        <div class="border-top pt-3">
+            <small class="text-muted">
+                Need An Account? <a class="ml-2" href="{% url 'register' %}">Sign Up Now</a>
+            </small>
+        </div>
+        <button class="btn btn-lg btn-primary btn-block mt-3" type="submit">Sign in</button>
+    </form>
+</section>
+{% endblock %}

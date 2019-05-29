@@ -1,0 +1,142 @@
+<table id="app-table" class="display dt-responsive no-wrap" width="100%" cellspacing="0">
+    <thead>
+        <tr>
+            <th class="tablet-p"></th>
+            <th class="all">Title</th>
+            <th class="all">Place</th>
+            <th class="all">State</th>
+            <th class="tablet-p">Type</th>
+            <th class="tablet-p"></th>
+            <th>API</th>
+            <th>Web App Version</th>
+            <th>Last Edited</th>
+            <th>Last Editor</th>
+            <th>Description</th>
+        </tr>
+    </thead>
+</table>
+
+<script type="text/javascript">
+    // Parse JSON
+    const tabledata = JSON.parse('{{ data | escapejs }}');
+    let newData = []
+    tabledata.forEach(function(item) {
+        console.log(item.fields);
+        newData.push(item.fields)
+    });
+
+    // Dynamically generate table
+    $(document).ready(function () {
+        var table = $('#app-table').DataTable({
+            "data": newData,
+            select:"single",
+            "columns": [
+                {
+                    "className": 'details-control',
+                    "orderable": false,
+                    "data": null,
+                    "defaultContent": '',
+                    "render": function () {
+                        return '<i class="fa fa-plus-square" aria-hidden="true"></i>';
+                    },
+                    width:"15px"
+                },
+                { 
+                    "data": "title",
+                },
+                { "data": "place" },
+                { "data": "state" },
+                { "data": "app_type"},
+                { 
+                    "orderable": false,
+                    "data": "url",
+                    "defaultContent": '',
+                    "render": function (data, type, row) {
+                        return '<a href="'+ row.url +'" target="_blank"><i class="fas fa-external-link-square-alt"></i></a>';
+                    },
+                    width:"15px"
+                },
+                { 
+                    "data": "api",
+                    "visible": false
+                },
+                {
+                    "data": "web_app_version",
+                    "visible": false
+                },
+                {
+                    "data": "last_edited",
+                    "visible": false
+                },
+                {
+                    "data": "last_editor",
+                    "visible": false
+                },
+                {
+                    "data": "description",
+                    "visible": false
+                }
+            ],
+            "order": [[1, 'asc']]
+        });
+
+        // Add event listener for opening/closing details
+        $('#app-table tbody').on('click', 'td.details-control', function () {
+            var tr = $(this).closest('tr');
+            var tdi = tr.find("i.fa");
+            var row = table.row(tr);
+
+            if (row.child.isShown()) {
+                // This row is already open - close it
+                row.child.hide();
+                tr.removeClass('shown');
+                tdi.first().removeClass('fa-minus-square');
+                tdi.first().addClass('fa-plus-square');
+            }
+            else {
+                // Open this row
+                row.child(format(row.data())).show();
+                tr.addClass('shown');
+                tdi.first().removeClass('fa-plus-square');
+                tdi.first().addClass('fa-minus-square');
+            }
+        });
+
+        table.on("user-select", function (e, dt, type, cell, originalEvent) {
+            if ($(cell.node()).hasClass("details-control")) {
+                e.preventDefault();
+            }
+        });
+    });
+
+    function format(d){
+        
+        // `d` is the original data object for the row
+        return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+            '<tr>' +
+                '<td style="background-color: rgba(55, 105, 139, 0.13);color: #212529;font-weight: 500;">Category:</td>' +
+                '<td>' + d.category + '</td>' +
+            '</tr>' +
+            '<tr>' +
+                '<td style="background-color: rgba(55, 105, 139, 0.13);color: #212529;font-weight: 500;">API:</td>' +
+                '<td>' + d.api + '</td>' +
+            '</tr>' +
+            '<tr>' +
+                '<td style="background-color: rgba(55, 105, 139, 0.13);color: #212529;font-weight: 500;">Web App Version:</td>' +
+                '<td>' + d.web_app_version + '</td>' +
+            '</tr>' +
+            '<tr>' +
+                '<td style="background-color: rgba(55, 105, 139, 0.13);color: #212529;font-weight: 500;">Description:</td>' +
+                '<td>' + d.description + '</td>' +
+            '</tr>' +
+            '<tr>' +
+                '<td style="background-color: rgba(55, 105, 139, 0.13);color: #212529;font-weight: 500;">Last Edited By:</td>' +
+                '<td>' + d.last_editor + '</td>' +
+            '</tr>' +
+            '<tr>' +
+                '<td style="background-color: rgba(55, 105, 139, 0.13);color: #212529;font-weight: 500;">Last Edited:</td>' +
+                '<td>' + d.last_edited + '</td>' +
+            '</tr>' +
+        '</table>';  
+   }
+</script>

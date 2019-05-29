@@ -1,0 +1,91 @@
+<table id="app-table" class="display dt-responsive no-wrap" width="100%" cellspacing="0">
+        <thead>
+            <tr>
+                <th class="all">Title</th>
+                <th class="all">Place</th>
+                <th class="all">State</th>
+                <th class="not-mobile">Type</th>
+                <th class="none">API:</th>
+                <th class="none">Web App Version:</th>
+                <th class="none">Last Edited:</th>
+                <th class="none">Last Editor:</th>
+                <th class="none">Description:</th>
+                <th class="not-mobile"></th>
+            </tr>
+        </thead>
+    </table>
+    
+    <script type="text/javascript">
+        // Parse JSON
+        const tabledata = JSON.parse('{{ data | escapejs }}');
+        let newData = []
+        tabledata.forEach(function(item) {
+            console.log(item.fields);
+            newData.push(item.fields)
+        });
+    
+        // Dynamically generate table
+        $(document).ready(function () {
+            var table = $('#app-table').DataTable({
+                "data": newData,
+                //select:"single",
+                'columnDefs': [
+                {
+                    "targets": 9,
+                    "className": "text-center"
+                }],
+                "columns": [
+                    { "data": "title" },
+                    { "data": "place" },
+                    { "data": "state" },
+                    { "data": "app_type" },
+                    { "data": "api" },
+                    { "data": "web_app_version" },
+                    { "data": "last_edited" },
+                    { "data": "last_editor" },
+                    { "data": "description" },
+                    {
+                        "data": "url",
+                        "orderable": false,
+                        "defaultContent": '',
+                        "render": function (data, type, row) {
+                            return '<a href="'+ row.url +'" target="_blank" class="app-launch-btn">Launch App</a>';
+                        }
+                    },
+                ],
+                "order": [[1, 'asc']]
+            });
+        });
+    
+        function format(d){
+            
+            // `d` is the original data object for the row
+            return '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">' +
+                '<tr>' +
+                    '<td style="background-color: rgba(55, 105, 139, 0.13);color: #212529;font-weight: 500;">Category:</td>' +
+                    '<td>' + d.category + '</td>' +
+                '</tr>' +
+                '<tr>' +
+                    '<td style="background-color: rgba(55, 105, 139, 0.13);color: #212529;font-weight: 500;">API:</td>' +
+                    '<td>' + d.api + '</td>' +
+                '</tr>' +
+                '<tr>' +
+                    '<td style="background-color: rgba(55, 105, 139, 0.13);color: #212529;font-weight: 500;">Web App Version:</td>' +
+                    '<td>' + d.web_app_version + '</td>' +
+                '</tr>' +
+                '<tr>' +
+                    '<td style="background-color: rgba(55, 105, 139, 0.13);color: #212529;font-weight: 500;">Description:</td>' +
+                    '<td>' + d.description + '</td>' +
+                '</tr>' +
+                '<tr>' +
+                    '<td style="background-color: rgba(55, 105, 139, 0.13);color: #212529;font-weight: 500;">Last Edited By:</td>' +
+                    '<td>' + d.last_editor + '</td>' +
+                '</tr>' +
+                '<tr>' +
+                    '<td style="background-color: rgba(55, 105, 139, 0.13);color: #212529;font-weight: 500;">Last Edited:</td>' +
+                    '<td>' + d.last_edited + '</td>' +
+                '</tr>' +
+            '</table>';  
+       }
+    </script>
+    
