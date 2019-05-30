@@ -6,7 +6,9 @@ from django.contrib.auth.decorators import login_required
 
 from apps.models import App
 
-@login_required(login_url='/cloudsmart-jump-page/accounts/login')
+
+# @login_required(login_url='/cloudsmart-jump-page/accounts/login')
+@login_required(login_url='/accounts/login')
 def index(request):
     group = request.user.groups.all()
     if request.user.is_staff or request.user.is_superuser:
@@ -15,7 +17,7 @@ def index(request):
     else:
         apps = App.objects.filter(place=group[0])
         place = group[0]
-    
+
     distinct_types = App.objects.order_by('app_type').distinct('app_type')
     distinct_states = App.objects.order_by('state').distinct('state')
     distinct_place = App.objects.order_by('place').distinct('place')

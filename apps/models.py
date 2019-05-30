@@ -104,15 +104,18 @@ EDITORS = (
     ('Jarom Hlebasko', 'Jarom Hlebasko'),
     ('John McLaughlin', 'John McLaughlin'),
     ('Rafal Rudzinski', 'Rafal Rudzinski'),
-    ('Unknown','Unknown'),
+    ('Unknown', 'Unknown'),
 )
 SORTED_EDITORS = sorted(EDITORS, key=lambda x: x[1])
 
 PLACES = (
     ('Afton WY', 'Afton WY'),
-    ('Ashley Valley (UT) Water & Sewer District (AVWSID)', 'Ashley Valley (UT) Water & Sewer District (AVWSID)'),
-    ('Bedford (WY) Water & Sewer District (BWSD)', 'Bedford (WY)  Water & Sewer District (BWSD)'),
-    ('Big Park (AZ) Domestic Wastewater Improvement District (DWWID)', 'Big Park (AZ) Domestic Wastewater Improvement District (DWWID)'),
+    ('Ashley Valley (UT) Water & Sewer District (AVWSID)',
+     'Ashley Valley (UT) Water & Sewer District (AVWSID)'),
+    ('Bedford (WY) Water & Sewer District (BWSD)',
+     'Bedford (WY)  Water & Sewer District (BWSD)'),
+    ('Big Park (AZ) Domestic Wastewater Improvement District (DWWID)',
+     'Big Park (AZ) Domestic Wastewater Improvement District (DWWID)'),
     ('Big Water UT', 'Big Water UT'),
     ('Caliente NV', 'Caliente NV'),
     ('Cedar Highlands UT', 'Cedar Highlands UT'),
@@ -121,7 +124,8 @@ PLACES = (
     ('Clark County NV', 'Clark County NV'),
     ('Delta UT', 'Delta UT'),
     ('Demonstration (Demo)', 'Demonstration (Demo)'),
-    ('Dixie Deer (UT) Special Service District (SSD)', 'Dixie Deer (UT) Special Service District (SSD)'),
+    ('Dixie Deer (UT) Special Service District (SSD)',
+     'Dixie Deer (UT) Special Service District (SSD)'),
     ('Enoch UT', 'Enoch UT'),
     ('Fillmore UT', 'Fillmore UT'),
     ('Gila County AZ', 'Gila County AZ'),
@@ -129,8 +133,10 @@ PLACES = (
     ('Gunnison UT', 'Gunnison UT'),
     ('Hildale UT', 'Hildale UT'),
     ('Ivins UT', 'Ivins UT'),
-    ('Johnson Water Improvement District (UT) (JWID)', 'Johnson Water Improvement District (UT) (JWID)'),
-    ('Kane County (UT) Water Conservancy District (KCWCD)', 'Kane County (UT) Water Conservancy District (KCWCD)'),
+    ('Johnson Water Improvement District (UT) (JWID)',
+     'Johnson Water Improvement District (UT) (JWID)'),
+    ('Kane County (UT) Water Conservancy District (KCWCD)',
+     'Kane County (UT) Water Conservancy District (KCWCD)'),
     ('LaVerkin UT', 'LaVerkin UT'),
     ('Lincoln County NV', 'Lincoln County NV'),
     ('Milford UT', 'Milford UT'),
@@ -138,7 +144,8 @@ PLACES = (
     ('Maricopa County AZ', 'Maricopa County AZ'),
     ('Mayfield UT', 'Mayfield UT'),
     ('Minden NV', 'Minden NV'),
-    ('Moapa Valley (NV) Water System (MVWD)', 'Moapa Valley (NV) Water System (MVWD)'),
+    ('Moapa Valley (NV) Water System (MVWD)',
+     'Moapa Valley (NV) Water System (MVWD)'),
     ('Mt. Pleasant UT', 'Mt. Pleasant UT'),
     ('Neola UT', 'Neola UT'),
     ('Parowan UT', 'Parowan UT'),
@@ -148,7 +155,8 @@ PLACES = (
     ('Pine Bluffs WY', 'Pine Bluffs WY'),
     ('Rockville UT', 'Rockville UT'),
     ('Santa Clara UT', 'Santa Clara UT'),
-    ('Southwest (UT) Mosquito Abatement Control District (SWMACD)', 'Southwest (UT) Mosquito Abatement Control District (SWMACD)'),
+    ('Southwest (UT) Mosquito Abatement Control District (SWMACD)',
+     'Southwest (UT) Mosquito Abatement Control District (SWMACD)'),
     ('Springdale UT', 'Springdale UT'),
     ('St George UT', 'St George UT'),
     ('Summit UT', 'Summit UT'),
@@ -179,21 +187,28 @@ STATES = (
 )
 SORTED_STATES = sorted(STATES, key=lambda x: x[1])
 
+
 class App(models.Model):
-    add_date         = models.DateTimeField(auto_now_add=True)
-    api              = models.CharField("API Version", max_length=10, choices=API_VERSIONS, blank=True)
-    app_type         = models.CharField(max_length=20, choices=APP_TYPES)
-    category         = models.CharField(max_length=100, choices=SORTED_CATEGORIES)
-    description      = models.TextField()
-    is_demo          = models.BooleanField(default=False)
-    last_edited      = models.DateTimeField("Last Edited", default=datetime.now, blank=True)
-    last_editor      = models.CharField("Last Editor", max_length=100, choices=SORTED_EDITORS)
-    photo            = models.ImageField(upload_to='photos/', blank=True)
-    place            = models.CharField(max_length=100, choices=SORTED_PLACES, blank=True)
-    state            = models.CharField(max_length=10, choices=SORTED_STATES)
-    title            = models.CharField(max_length=100)
-    url              = models.CharField(max_length=200)
-    web_app_version  = models.CharField(max_length=20, choices=WEBAPP_VERSION, blank=True)
+    add_date = models.DateTimeField(auto_now_add=True)
+    api = models.CharField(
+        "JSAPI Version", max_length=10, choices=API_VERSIONS)
+    web_app_version = models.CharField("WAB Version",
+                                       max_length=20, choices=WEBAPP_VERSION)
+    ga_code = models.CharField("GA code", max_length=100, blank=True)
+    app_type = models.CharField(max_length=20, choices=APP_TYPES)
+    category = models.CharField(max_length=100, choices=SORTED_CATEGORIES)
+    description = models.TextField()
+    is_demo = models.BooleanField(default=False)
+    last_edited = models.DateTimeField(
+        "Last Edited", default=datetime.now, blank=True)
+    last_editor = models.CharField(
+        "Last Editor", max_length=100, choices=SORTED_EDITORS)
+    photo = models.ImageField(upload_to='photos/', blank=True)
+    place = models.CharField(max_length=100, choices=SORTED_PLACES, blank=True)
+    state = models.CharField(max_length=10, choices=SORTED_STATES)
+    title = models.CharField(max_length=100)
+    url = models.CharField(max_length=200)
+
 
 def __str__(self):
     return self.title

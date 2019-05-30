@@ -4,8 +4,12 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 urlpatterns = [
-    path('cloudsmart-jump-page/', include('pages.urls')),
-    path('cloudsmart-jump-page/apps', include('apps.urls')),
-    path('cloudsmart-jump-page/accounts/', include('accounts.urls')),
-    path('cloudsmart-jump-page/admin/', admin.site.urls),
+    #path('cloudsmart-jump-page/', include('pages.urls')),
+    path('', include('pages.urls')),
+    #path('cloudsmart-jump-page/apps', include('apps.urls')),
+    path('apps/', include('apps.urls')),
+    #path('cloudsmart-jump-page/accounts/', include('accounts.urls')),
+    path('accounts/', include('accounts.urls')),
+    #path('cloudsmart-jump-page/admin/', admin.site.urls),
+    path('admin/', admin.site.urls),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

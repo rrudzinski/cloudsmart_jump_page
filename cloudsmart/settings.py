@@ -1,3 +1,4 @@
+from django.contrib.messages import constants as messages
 """
 Django settings for cloudsmart project.
 
@@ -23,10 +24,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'fv3+-^+b+jy$54#2p%z8+(w@84w*mcv%i@qb#eo6z%*3g65$^t'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False ## Orig
+DEBUG = True  # Orig
 # DEBUG = True ## For TESTING only - BWC
 
-ALLOWED_HOSTS = ['apps.cloudsmartgis.com', 'localhost']
+#ALLOWED_HOSTS = ['apps.cloudsmartgis.com', 'localhost']
+ALLOWED_HOSTS = []
 
 
 # Application definition
@@ -41,8 +43,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'django_tables2',
-    'crispy_forms',
 ]
 
 MIDDLEWARE = [
@@ -79,13 +79,15 @@ WSGI_APPLICATION = 'cloudsmart.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'cloudsmart',
         'USER': 'postgres',
-        'PASSWORD': '5unrise#dba',
-        'HOST': 'localhost'
+        'PASSWORD': 'Bialy$tok821',
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
@@ -130,17 +132,19 @@ USE_TZ = True
 #STATIC_URL = '/static/'
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-STATIC_URL = '/cloudsmart-jump-page/static/'
+#STATIC_URL = '/cloudsmart-jump-page/static/'
+STATIC_URL = '/cloudsmart/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'cloudsmart/static')
 ]
 
 # Media Folder Settings
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-MEDIA_URL = '/cloudsmart-jump-page/media/'
+#MEDIA_URL = '/cloudsmart-jump-page/media/'
+MEDIA_URL = '/cloudsmart/media/'
+
 
 # Messages
-from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
     messages.ERROR: 'danger'
 }
@@ -151,5 +155,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
-EMAIL_HOST_USER = 'cloudsmartgis@gmail.com' #os.environ.get('EMAIL_USER')
-EMAIL_HOST_PASSWORD = '$martGIS16' #os.environ.get('EMAIL_PASS')
+EMAIL_HOST_USER = 'cloudsmartgis@gmail.com'  # os.environ.get('EMAIL_USER')
+EMAIL_HOST_PASSWORD = '$martGIS16'  # os.environ.get('EMAIL_PASS')
